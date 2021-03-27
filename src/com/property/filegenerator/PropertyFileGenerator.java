@@ -1,6 +1,9 @@
 package com.property.filegenerator;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -11,21 +14,15 @@ import java.util.stream.Stream;
 public class PropertyFileGenerator {
     private final static Logger logger = Logger.getLogger(PropertyFileGenerator.class.toString());
     public static void main(String[] args) throws IOException {
-        File file = createFileObject("src/test.properties");
-        File file1 = createFileObject("src/test2.txt");
-        BufferedReader bufferedReader = createAReaderObject(file);
-        BufferedReader bufferedReader1 = createAReaderObject(file1);
-        Map<String, String> with_key_values = convertTomap(bufferedReader.lines(), "=");
-        System.out.println(with_key_values);
-        Map<String, String> with_only_values = convertTomap(bufferedReader1.lines(), ",");
-        System.out.println(with_only_values);
-        bufferedReader.close();
-        bufferedReader1.close();
-        List<String> keyValueParis = new ArrayList<>();
-        List<String> notFoundList = new ArrayList<>();
-        List<String> lists = findAndAppendkeyWithValue(with_key_values, with_only_values);
-        keyValueParis = lists;
+        Stream<String> fileStream1 = createStreamFromPath("src/test.properties");
+        Stream<String> fileStream2 = createStreamFromPath("src/test2.txt");
         GenerateFile generateFile = new GenerateFile();
+        Stream<String> formattedFileStream1 = generateFile.removeSpacesAndNewlines(fileStream1);
+        Stream<String> formattedFileStream2 = generateFile.removeSpacesAndNewlines(fileStream2);
+        Map<String, String> with_key_values = convertTomap(formattedFileStream1, "=");
+        Map<String, String> with_only_values = convertTomap(formattedFileStream2, "\\|");
+        List<String> notFoundList = new ArrayList<>();
+        List<String> keyValueParis = findAndAppendkeyWithValue(with_key_values, with_only_values);
         generateFile.createFileFromList(keyValueParis);
         System.out.println(notFoundList);
     }
@@ -47,22 +44,11 @@ public class PropertyFileGenerator {
     /**
      *  creating file object with path
      * @param pathOrFileName
-     * @return File
+     * @return Stream<String>
      */
-    public static File createFileObject(String pathOrFileName) {
+    public static Stream<String> createStreamFromPath(String pathOrFileName) throws IOException {
         logger.info("creating a file object with path or file name : " + pathOrFileName);
-        return new File(pathOrFileName);
-    }
-
-    /**
-     * creates buffered reader object with file object
-     * @param file
-     * @return BufferedReader
-     * @throws FileNotFoundException
-     */
-    public static BufferedReader createAReaderObject(File file) throws FileNotFoundException {
-        logger.info("creating a reader object for file : " + file.getName());
-        return new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+        return Files.lines(Paths.get(pathOrFileName));
     }
 
     /**
@@ -74,10 +60,9 @@ public class PropertyFileGenerator {
      */
     public static List<String> findAndAppendkeyWithValue(Map<String, String> with_key_and_values, Map<String, String> with_values) {
         logger.info("Streaming two different maps to find and append key with value");
-        List<String> values = with_values.entrySet().stream().map(valueSet -> with_key_and_values.entrySet().stream().filter(keyValue -> keyValue.getValue().trim().equalsIgnoreCase(valueSet.getKey().trim()))
+        return with_values.entrySet().stream().map(valueSet -> with_key_and_values.entrySet().stream().filter(keyValue -> keyValue.getValue().trim().equalsIgnoreCase(valueSet.getKey().trim()))
                 .map(keyValue -> keyValue.getKey().trim() + "=" + valueSet.getValue().trim())
                 .collect(Collectors.toList()))
                 .flatMap(list -> list.stream()).collect(Collectors.toList());
-        return values;
     }
 }
