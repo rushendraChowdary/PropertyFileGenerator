@@ -13,9 +13,9 @@ Feel free to email me at ```rushendra514@gmail.com``` , if i can or you can make
 
 # Example
 test.properties
+
 ```
 test.text.lang = Hello
-
 ```
 test.txt
 
