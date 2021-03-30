@@ -10,7 +10,7 @@ Please go through the code & let me know if i can optimize this better.
 Please review the code & raise issues if i can do better.
 
 I wrote this tool because i was exhausted doing internationalization for SAP CX (Hybris) project manually.
-I am not saying this will take care of everything but this will do the job better. Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this better.
+I am not saying this will take care of everything but this will do the job better.
 
 # Example
 test.properties
@@ -24,6 +24,8 @@ test.txt
 Hello|Bonjour
 ```
 Notice that  ```Bonjour``` means ```Hello``` in french.
+
+ Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this tool better.
 
 
 ```Hack The Planet ``` :v:
