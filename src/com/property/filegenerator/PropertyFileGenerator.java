@@ -16,16 +16,16 @@ public class PropertyFileGenerator {
     private static List<String> notFoundList = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        Stream<String> fileStream1 = createStreamFromPath("src/test.properties");
-        Stream<String> fileStream2 = createStreamFromPath("src/test2.txt");
-        if ((fileStream1.findAny() != null) && (fileStream2.findAny() != null)) {
+        Stream<String> fileStream1 = createStreamFromPath("src"+File.separator+"test.properties");
+        Stream<String> fileStream2 = createStreamFromPath("src"+File.separator+"test.txt");
             Map<String, String> with_key_values = convertTomap(fileStream1, "=");
             Map<String, String> with_only_values = convertTomap(fileStream2, "\\|");
             if (!with_key_values.isEmpty() && with_key_values != null && !with_only_values.isEmpty() && with_only_values != null) {
                 GenerateFile generateFile = new GenerateFile();
                 generateFile.createFileFromList(findAndAppendkeyWithValue(with_key_values, with_only_values));
+            } else {
+                logger.info("Either one of your files are not following the rules");
             }
-        }
     }
 
     /**
@@ -65,9 +65,7 @@ public class PropertyFileGenerator {
     public static List<String> findAndAppendkeyWithValue(Map<String, String> with_key_and_values, Map<String, String> with_values) {
         logger.info("Streaming two different maps to find and append key with value");
         return with_values.entrySet().stream().filter(valueSet -> isContainskeyInMap(valueSet.getKey(), with_key_and_values))
-                .map(valueSet -> with_key_and_values.entrySet().stream().filter(keyValue -> keyValue.getValue().equalsIgnoreCase(valueSet.getKey()))
-                        .map(keyValue -> keyValue.getKey() + "=" + valueSet.getValue())
-                        .collect(Collectors.toList()))
+                .map(valueSet -> compareValueWithKeyValMap(valueSet,with_key_and_values))
                 .flatMap(list -> list.stream()).collect(Collectors.toList());
     }
 
@@ -86,5 +84,17 @@ public class PropertyFileGenerator {
             notFoundList.add(key);
             return false;
         }
+    }
+
+    /**
+     * Compare each entry key with map of key value pairs & collect it to list
+     * @param valueSet
+     * @param with_key_values
+     * @return
+     */
+    public static List<String> compareValueWithKeyValMap(Map.Entry<String,String> valueSet, Map<String,String> with_key_values){
+        return with_key_values.entrySet().stream().filter(keyVal -> keyVal.getValue().equalsIgnoreCase(valueSet.getKey()))
+                .map(keyVal -> keyVal.getKey().concat("=").concat(valueSet.getKey()))
+                .collect(Collectors.toList());
     }
 }
