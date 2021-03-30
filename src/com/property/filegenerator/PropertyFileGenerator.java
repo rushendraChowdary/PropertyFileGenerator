@@ -18,11 +18,14 @@ public class PropertyFileGenerator {
     public static void main(String[] args) throws IOException {
         Stream<String> fileStream1 = createStreamFromPath("src/test.properties");
         Stream<String> fileStream2 = createStreamFromPath("src/test2.txt");
-        Map<String, String> with_key_values = convertTomap(fileStream1, "=");
-        Map<String, String> with_only_values = convertTomap(fileStream2, "\\|");
-        List<String> keyValueParis = findAndAppendkeyWithValue(with_key_values, with_only_values);
-        GenerateFile generateFile = new GenerateFile();
-        generateFile.createFileFromList(keyValueParis);
+        if ((fileStream1.findAny() != null) && (fileStream2.findAny() != null)) {
+            Map<String, String> with_key_values = convertTomap(fileStream1, "=");
+            Map<String, String> with_only_values = convertTomap(fileStream2, "\\|");
+            if (!with_key_values.isEmpty() && with_key_values != null && !with_only_values.isEmpty() && with_only_values != null) {
+                GenerateFile generateFile = new GenerateFile();
+                generateFile.createFileFromList(findAndAppendkeyWithValue(with_key_values, with_only_values));
+            }
+        }
     }
 
     /**
@@ -37,7 +40,7 @@ public class PropertyFileGenerator {
     }
 
     /**
-     * Take stream of string and delimiter and convert that to Map object
+     * Split stream<String> with delimiter as key value pairs & add it to the map
      *
      * @param stream
      * @param delimiter
@@ -70,7 +73,8 @@ public class PropertyFileGenerator {
 
     /**
      * Checks if a key is present in the Map of key value pairs and retuns
-     *  true if exists otherwise add the key to not found list and retuns false
+     * true if exists otherwise add the key to not found list and retuns false
+     *
      * @param key
      * @param keyValuePair
      * @return boolean

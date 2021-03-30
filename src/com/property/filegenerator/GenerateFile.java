@@ -15,13 +15,16 @@ public class GenerateFile {
 
     /**
      * This method takes a list of localized key value pair list
-     *  and add the list to a file in UTF_8 format.
+     * and add the list to a file in UTF_8 format.
+     *
      * @param keyValuePairsList
      * @throws IOException
      */
     public void createFileFromList(List<String> keyValuePairsList) throws IOException {
-        Path filePath = Paths.get("src/com/property/filegenerator/file.properties");
-        Files.write(filePath,keyValuePairsList, StandardCharsets.UTF_8);
-        logger.info("file generated with name : " + filePath.getFileName());
+        if (!keyValuePairsList.isEmpty() && keyValuePairsList != null) {
+            Path filePath = Paths.get("src/com/property/filegenerator/file.properties");
+            Files.write(filePath, keyValuePairsList, StandardCharsets.UTF_8);
+            logger.info("file generated with name : " + filePath.getFileName());
+        }
     }
 }
