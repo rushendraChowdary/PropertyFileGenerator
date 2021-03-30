@@ -94,7 +94,7 @@ public class PropertyFileGenerator {
      */
     public static List<String> compareValueWithKeyValMap(Map.Entry<String,String> valueSet, Map<String,String> with_key_values){
         return with_key_values.entrySet().stream().filter(keyVal -> keyVal.getValue().equalsIgnoreCase(valueSet.getKey()))
-                .map(keyVal -> keyVal.getKey().concat("=").concat(valueSet.getKey()))
+                .map(keyVal -> keyVal.getKey().concat("=").concat(valueSet.getValue()))
                 .collect(Collectors.toList());
     }
 }
