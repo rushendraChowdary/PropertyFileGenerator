@@ -5,11 +5,12 @@ The idea is to take two files with names test.properties (for now) & test.txt an
 test.properties file will be splitted using "=" & test.txt will be splitted using "|" and add both of these to two different maps.
 Then call the method which process these maps further, for every value check if there is a value present in the key-value map.
 If there is a value then take the key from test.property file & combine it with the localized value of test.txt file.
+If it cannot find a value then it will simply add this to a notFoundList.
 Please go through the code & let me know if i can optimize this better.
 Please review the code & raise issues if i can do better.
 
 I wrote this tool because i was exhausted doing internationalization for SAP CX (Hybris) project manually.
-Feel free to email me at ```rushendra514@gmail.com``` , if i can or you can make this better.
+I am not saying this will take care of everything but this will do the job better. Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this better.
 
 # Example
 test.properties
@@ -23,3 +24,6 @@ test.txt
 Hello|Bonjour
 ```
 Notice that  ```Bonjour``` means ```Hello``` in french.
+
+
+```Hack The Planet ``` :v:
