@@ -9,9 +9,7 @@ Please go through the code & let me know if i can optimize this better.
 Please review the code & raise issues if i can do better.
 
 I wrote this tool because i was exhausted doing internationalization for SAP CX (Hybris) project manually.
-Feel free to Hit me up, if i can or you can make this better.
-
-```rushendra514@gmail.com```
+Feel free to email me at ```rushendra514@gmail.com``` , if i can or you can make this better.
 
 # Example
 test.properties
