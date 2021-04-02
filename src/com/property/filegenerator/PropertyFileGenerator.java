@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,16 +17,14 @@ public class PropertyFileGenerator {
     private static List<String> notFoundList = new ArrayList<>();
 
     public static void main(String[] args) throws IOException {
-        Stream<String> fileStream1 = createStreamFromPath("src"+File.separator+"test.properties");
-        Stream<String> fileStream2 = createStreamFromPath("src"+File.separator+"test.txt");
-            Map<String, String> with_key_values = convertTomap(fileStream1, "=");
-            Map<String, String> with_only_values = convertTomap(fileStream2, "\\|");
-            if (!with_key_values.isEmpty() && with_key_values != null && !with_only_values.isEmpty() && with_only_values != null) {
-                GenerateFile generateFile = new GenerateFile();
-                generateFile.createFileFromList(findAndAppendkeyWithValue(with_key_values, with_only_values));
-            } else {
-                logger.info("Either one of your files are not following the rules");
-            }
+        logger.info("Enter 1 to extract values or 2 to make internationalization : ");
+        Scanner sc = new Scanner(System.in);
+        int input = sc.nextInt();
+        if(input == 1){
+            extractValues();
+        }else {
+            generateLocalizedFile();
+        }
     }
 
     /**
@@ -96,5 +95,34 @@ public class PropertyFileGenerator {
         return with_key_values.entrySet().stream().filter(keyVal -> keyVal.getValue().equalsIgnoreCase(valueSet.getKey()))
                 .map(keyVal -> keyVal.getKey().concat("=").concat(valueSet.getValue()))
                 .collect(Collectors.toList());
+    }
+
+    /**
+     * This get's called if the user input is 1
+     * @throws IOException
+     */
+    public static void generateLocalizedFile() throws IOException {
+        GenerateFile generateFile = new GenerateFile();
+        Stream<String> fileStream1 = createStreamFromPath("src"+File.separator+"test.properties");
+        Stream<String> fileStream2 = createStreamFromPath("src"+File.separator+"test.txt");
+        Map<String, String> with_key_values = convertTomap(fileStream1, "=");
+        Map<String, String> with_only_values = convertTomap(fileStream2, "\\|");
+        if (!with_key_values.isEmpty() && with_key_values != null && !with_only_values.isEmpty() && with_only_values != null) {
+            generateFile.createFileFromList(findAndAppendkeyWithValue(with_key_values, with_only_values),"file.properties");
+        } else {
+            logger.info("Either one of your files are not following the rules");
+        }
+    }
+
+    /**
+     * This get's called if the user input is 2
+     * @throws IOException
+     */
+    public static void extractValues() throws IOException{
+        GenerateFile generateFile = new GenerateFile();
+        Stream<String> fileStream1 = createStreamFromPath("src"+File.separator+"test.properties");
+        List<String> extractedKeys = generateFile.extractvalsFromPropertiesFile(fileStream1);
+        System.out.println(extractedKeys);
+        generateFile.createFileFromList(extractedKeys,"values.txt");
     }
 }

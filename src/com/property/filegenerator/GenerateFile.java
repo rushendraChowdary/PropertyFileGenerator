@@ -20,11 +20,24 @@ public class GenerateFile {
      * @param keyValuePairsList
      * @throws IOException
      */
-    public void createFileFromList(List<String> keyValuePairsList) throws IOException {
+    public void createFileFromList(List<String> keyValuePairsList, String fileName) throws IOException {
         if (!keyValuePairsList.isEmpty() && keyValuePairsList != null) {
-            Path filePath = Paths.get("src".concat(File.separator).concat("file.properties"));
+            Path filePath = Paths.get("src".concat(File.separator).concat(fileName));
             Files.write(filePath, keyValuePairsList, StandardCharsets.UTF_8);
             logger.info("file generated with name : " + filePath.getFileName());
         }
+    }
+
+    /**
+     * This method extracts the values from properties file
+     * @param keyValuePairs
+     * @return
+     */
+    public List<String> extractvalsFromPropertiesFile(Stream<String> keyValuePairs) {
+        return keyValuePairs.filter(str -> str.length() > 0)
+                .map(str -> str.split("="))
+                .filter(strArray -> strArray.length >= 2)
+                .map(strArray -> strArray[1].trim())
+                .collect(Collectors.toList());
     }
 }
