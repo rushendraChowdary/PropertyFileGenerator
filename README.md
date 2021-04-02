@@ -25,7 +25,27 @@ Hello|Bonjour
 ```
 Notice that  ```Bonjour``` means ```Hello``` in french.
 
- Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this tool better.
+### Final output will look something like below
+```
+test.text.lang=Bonjour
+```
 
+# Set up
+
+* step 1
+  <br/> ```git clone https://github.com/rushendraChowdary/PropertyFileGenerator.git```
+  clone the repository or download the zip file from github
+
+* step 2
+    <br /> Create the files with names mentioned(see Line no : 18, 19) in the ```PropertyFileGenerator.java``` or create new files with name of your choice and give the names in line number 18 & 19.
+    <br /> Follow the example to create new files for best results.
+  
+* Remember to use ```=``` for properties file & ```|```  for localized values.
+
+*  finally run the main method, if everything goes well you will see a file with name ```file.properties``` under ```src``` folder with localized values in it.
+
+
+
+Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this tool better.
 
 ```Hack The Planet ``` :v:
