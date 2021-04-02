@@ -53,6 +53,7 @@ test.text.lang=Bonjour
 * Limiting the file size
 * Optimizing the messy code
 * Should handle the exceptions really well
+* Work on a Spring web app to generate the replica & host it on HEROKU
 <br /><br /><br /><br /><br />
 #####Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this tool better.  
 
