@@ -48,8 +48,12 @@ test.text.lang=Bonjour
 
 *  finally run the main method, if everything goes well you will see a file with name ```file.properties``` under ```src``` folder with localized values in it.
 
+## SHOULD WORK ON
 
-
-Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this tool better.
+* Limiting the file size
+* Optimizing the messy code
+* Should handle the exceptions really well
+<br /><br /><br /><br /><br />
+#####Feel free to email me at ```rushendra514@gmail.com``` , if you have any ideas to make this tool better.  
 
 ```Hack The Planet ``` :v:
