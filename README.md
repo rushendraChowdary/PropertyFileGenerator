@@ -13,7 +13,11 @@ I wrote this tool because i was exhausted doing internationalization for SAP CX 
 I am not saying this will take care of everything but this will do the job better.
 
 # Example
-test.properties
+* user has an option to enter 1 or 2 based on his/her need.
+* if user enters ```1``` he / she needs to supply a property file in order to extract ```values``` from the file.
+* if user enters ```2``` then he / she needs to supply two files which are shown below.  
+
+<br />test.properties
 
 ```
 test.text.lang = Hello
