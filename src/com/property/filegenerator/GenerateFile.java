@@ -22,7 +22,7 @@ public class GenerateFile {
      */
     public void createFileFromList(List<String> keyValuePairsList) throws IOException {
         if (!keyValuePairsList.isEmpty() && keyValuePairsList != null) {
-            Path filePath = Paths.get("src/com/property/filegenerator/file.properties");
+            Path filePath = Paths.get("src".concat(File.separator).concat("file.properties"));
             Files.write(filePath, keyValuePairsList, StandardCharsets.UTF_8);
             logger.info("file generated with name : " + filePath.getFileName());
         }
