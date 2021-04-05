@@ -1,11 +1,14 @@
 package com.property.filegenerator;
 
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -33,11 +36,12 @@ public class GenerateFile {
      * @param keyValuePairs
      * @return
      */
-    public List<String> extractvalsFromPropertiesFile(Stream<String> keyValuePairs) {
+    public Set<String> extractvalsFromPropertiesFile(Stream<String> keyValuePairs) {
+        logger.info("Extracting values from properties file");
         return keyValuePairs.filter(str -> str.length() > 0)
                 .map(str -> str.split("="))
-                .filter(strArray -> strArray.length >= 2)
-                .map(strArray -> strArray[1].trim())
-                .collect(Collectors.toList());
+                .filter(cl -> cl.length >= 2)
+                .map(cl -> cl[1].trim())
+                .collect(Collectors.toSet());
     }
 }

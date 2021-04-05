@@ -1,13 +1,11 @@
 package com.property.filegenerator;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -35,7 +33,7 @@ public class PropertyFileGenerator {
      */
     public static Stream<String> createStreamFromPath(String pathOrFileName) throws IOException {
         logger.info("creating a file object with path or file name : " + pathOrFileName);
-        return Files.lines(Paths.get(pathOrFileName));
+        return Files.lines(Paths.get(pathOrFileName), StandardCharsets.ISO_8859_1);
     }
 
     /**
@@ -121,8 +119,10 @@ public class PropertyFileGenerator {
     public static void extractValues() throws IOException{
         GenerateFile generateFile = new GenerateFile();
         Stream<String> fileStream1 = createStreamFromPath("src"+File.separator+"test.properties");
-        List<String> extractedKeys = generateFile.extractvalsFromPropertiesFile(fileStream1);
+        logger.info(fileStream1.toString());
+        Set<String> extractedKeys = generateFile.extractvalsFromPropertiesFile(fileStream1);
+        List<String> newString = new ArrayList<>(extractedKeys);
         System.out.println(extractedKeys);
-        generateFile.createFileFromList(extractedKeys,"values.txt");
+        generateFile.createFileFromList(newString,"values.txt");
     }
 }
